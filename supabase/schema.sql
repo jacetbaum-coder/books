@@ -3,6 +3,7 @@ create table if not exists books (
   slug text unique not null,
   title text not null,
   author text not null,
+  cover_url text,
   publication_year integer,
   page_count integer,
   genre text,
@@ -37,3 +38,18 @@ create table if not exists books (
 
 create index if not exists books_slug_idx on books (slug);
 create index if not exists books_title_idx on books (title);
+
+create table if not exists my_library_entries (
+  id uuid primary key default gen_random_uuid(),
+  book_slug text not null,
+  title text not null,
+  author text not null,
+  cover_url text,
+  reader_associations jsonb not null default '{}'::jsonb,
+  user_reflection jsonb not null default '{}'::jsonb,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
+);
+
+create index if not exists my_library_entries_book_slug_idx on my_library_entries (book_slug);
+create index if not exists my_library_entries_created_at_idx on my_library_entries (created_at desc);

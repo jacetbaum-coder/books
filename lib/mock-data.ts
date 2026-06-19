@@ -6,6 +6,7 @@ const goldfinch: BookRecord = {
   info: {
     title: 'The Goldfinch',
     author: 'Donna Tartt',
+    coverUrl: 'https://covers.openlibrary.org/b/id/8359251-L.jpg',
     publicationYear: 2013,
     pageCount: 771,
     genre: 'Literary fiction',
@@ -50,6 +51,7 @@ const normalPeople: BookRecord = {
   info: {
     title: 'Normal People',
     author: 'Sally Rooney',
+    coverUrl: 'https://covers.openlibrary.org/b/id/9251146-L.jpg',
     publicationYear: 2018,
     pageCount: 273,
     genre: 'Literary fiction',
@@ -93,6 +95,7 @@ const shadowOfTheWind: BookRecord = {
   info: {
     title: 'The Shadow of the Wind',
     author: 'Carlos Ruiz Zafón',
+    coverUrl: 'https://covers.openlibrary.org/b/id/10521274-L.jpg',
     publicationYear: 2001,
     pageCount: 487,
     genre: 'Historical fiction',
@@ -136,6 +139,7 @@ const dune: BookRecord = {
   info: {
     title: 'Dune',
     author: 'Frank Herbert',
+    coverUrl: 'https://covers.openlibrary.org/b/id/8101356-L.jpg',
     publicationYear: 1965,
     pageCount: 688,
     genre: 'Science fiction',

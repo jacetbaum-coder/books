@@ -20,6 +20,12 @@ export default function HomePage() {
             <Link className="button-secondary" href="/search">
               Search by traits
             </Link>
+            <Link className="button-secondary" href="/add-book">
+              Add to my library
+            </Link>
+            <Link className="button-secondary" href="/my-library">
+              My library
+            </Link>
           </div>
         </div>
 

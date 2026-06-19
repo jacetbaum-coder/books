@@ -3,6 +3,7 @@ import { TraditionalBookInfo } from './types';
 type OpenLibrarySearchDoc = {
   title?: string;
   author_name?: string[];
+  cover_i?: number;
   first_publish_year?: number;
   number_of_pages_median?: number;
   ratings_average?: number;
@@ -31,6 +32,10 @@ type GoogleVolume = {
     ratingsCount?: number;
     description?: string;
     subtitle?: string;
+    imageLinks?: {
+      thumbnail?: string;
+      smallThumbnail?: string;
+    };
   };
 };
 
@@ -107,6 +112,7 @@ async function fetchOpenLibraryInfo(title: string, author: string): Promise<Part
   return {
     title: best.title ?? title,
     author: best.author_name?.[0] ?? author,
+    coverUrl: best.cover_i ? `https://covers.openlibrary.org/b/id/${best.cover_i}-L.jpg` : null,
     publicationYear: best.first_publish_year ?? 0,
     pageCount: best.number_of_pages_median ?? 0,
     genre,
@@ -140,6 +146,7 @@ async function fetchGoogleBooksInfo(title: string, author: string): Promise<Part
   return {
     title: first.title ?? title,
     author: first.authors?.[0] ?? author,
+    coverUrl: first.imageLinks?.thumbnail ?? first.imageLinks?.smallThumbnail ?? null,
     publicationYear: parsePublicationYear(first.publishedDate),
     pageCount: first.pageCount ?? 0,
     genre,
@@ -174,6 +181,7 @@ export async function fetchExternalBookInfo(title: string, author: string): Prom
   const merged: TraditionalBookInfo = {
     title: (chooseValue(ol?.title, gb?.title, title) as string) ?? title,
     author: (chooseValue(ol?.author, gb?.author, author) as string) ?? author,
+    coverUrl: (chooseValue(gb?.coverUrl, ol?.coverUrl, null) as string | null) ?? null,
     publicationYear: (chooseValue(ol?.publicationYear, gb?.publicationYear, 0) as number) ?? 0,
     pageCount: (chooseValue(ol?.pageCount, gb?.pageCount, 0) as number) ?? 0,
     genre: (chooseValue(gb?.genre, ol?.genre, 'Unknown') as string) ?? 'Unknown',

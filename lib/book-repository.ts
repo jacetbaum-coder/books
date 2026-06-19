@@ -5,6 +5,7 @@ type BookRow = {
   slug: string;
   title: string;
   author: string;
+  cover_url: string | null;
   publication_year: number;
   page_count: number;
   genre: string;
@@ -41,6 +42,7 @@ function toBookRecord(row: BookRow): BookRecord {
     info: {
       title: row.title,
       author: row.author,
+      coverUrl: row.cover_url ?? null,
       publicationYear: row.publication_year ?? 0,
       pageCount: row.page_count ?? 0,
       genre: row.genre ?? 'Unknown',
@@ -84,6 +86,7 @@ function toBookRow(book: BookRecord): BookRow {
     slug: book.slug,
     title: book.info.title,
     author: book.info.author,
+    cover_url: book.info.coverUrl,
     publication_year: book.info.publicationYear,
     page_count: book.info.pageCount,
     genre: book.info.genre,

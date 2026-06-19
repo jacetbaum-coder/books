@@ -42,6 +42,7 @@ export type ReviewInsights = {
 export type TraditionalBookInfo = {
   title: string;
   author: string;
+  coverUrl: string | null;
   publicationYear: number;
   pageCount: number;
   genre: string;
@@ -66,4 +67,38 @@ export type Recommendation = {
   author: string;
   score: number;
   reasons: string[];
+};
+
+export type LibraryReaderAssociations = {
+  loved: string[];
+  disliked: string[];
+  recurringThemes: string[];
+  summary: string;
+  narrative: NarrativeLabel[];
+  pacing: PaceLabel;
+  storyFocus: StoryFocusLabel[];
+  emotionalTone: EmotionalToneLabel[];
+  readingExperience: ReadingExperienceLabel[];
+  structure: StructureLabel[];
+  dimensions: BookDNA['dimensions'];
+};
+
+export type LibraryUserReflection = {
+  personalRating: number;
+  feltMost: string[];
+  notes: string;
+  wouldRecommendTo: string;
+  finishedOn: string | null;
+};
+
+export type LibraryEntry = {
+  id: string;
+  bookSlug: string;
+  title: string;
+  author: string;
+  coverUrl: string | null;
+  readerAssociations: LibraryReaderAssociations;
+  userReflection: LibraryUserReflection;
+  createdAt: string;
+  updatedAt: string;
 };
