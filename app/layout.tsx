@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import './globals.css';
+import { LocalMemoryProvider } from '@/components/local-memory-provider';
 
 export const metadata: Metadata = {
   title: 'Book DNA',
@@ -9,7 +10,9 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <LocalMemoryProvider>{children}</LocalMemoryProvider>
+      </body>
     </html>
   );
 }

@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { BookDnaChart } from '@/components/book-dna-chart';
+import { BookMemoryControls } from '@/components/book-memory-controls';
 import { BookProfile } from '@/components/book-profile';
 import { RecommendationCard } from '@/components/recommendation-card';
 import { bookCatalog, bookCatalogBySlug } from '@/lib/mock-data';
@@ -48,6 +49,7 @@ export default async function BookPage({
       </div>
 
       <div className="space-y-8">
+        <BookMemoryControls book={book} />
         <BookProfile book={book} />
         <BookDnaChart dna={book.dna} />
 

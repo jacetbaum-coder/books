@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { searchByTraits } from '@/lib/trait-search';
+import { TraitSearchForm } from '@/components/trait-search-form';
 
 export default async function TraitSearchPage({ searchParams }: { searchParams: Promise<{ q?: string }> }) {
   const params = await searchParams;
@@ -18,24 +19,7 @@ export default async function TraitSearchPage({ searchParams }: { searchParams: 
         </Link>
       </div>
 
-      <form className="panel p-6" action="/search" method="get">
-        <label className="space-y-2">
-          <span className="label">Describe the reading experience</span>
-          <input className="input" defaultValue={query} name="q" placeholder="slow-burn character-driven literary fiction with melancholy atmosphere" />
-        </label>
-        <div className="mt-4 flex flex-wrap gap-2">
-          {['slow-burn', 'character-driven', 'melancholy', 'multiple POV', 'dense prose', 'philosophical'].map((example) => (
-            <span key={example} className="chip">
-              {example}
-            </span>
-          ))}
-        </div>
-        <div className="mt-5">
-          <button className="button-primary" type="submit">
-            Search
-          </button>
-        </div>
-      </form>
+      <TraitSearchForm initialQuery={query} />
 
       <section className="mt-8 space-y-4">
         <div>
