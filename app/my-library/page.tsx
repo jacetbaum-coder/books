@@ -14,9 +14,14 @@ export default async function MyLibraryPage() {
           <h1 className="mt-2 text-4xl font-semibold tracking-tight text-amber-50">My Library</h1>
           <p className="mt-3 max-w-3xl text-amber-50/78">Every book you logged, with covers, community profile traits, and your own reflection.</p>
         </div>
-        <Link className="button-primary" href="/add-book">
-          Add another book
-        </Link>
+        <div className="flex flex-wrap gap-3">
+          <Link className="button-secondary" href="/">
+            Back to home
+          </Link>
+          <Link className="button-primary" href="/add-book">
+            Add another book
+          </Link>
+        </div>
       </div>
 
       {entries.length === 0 ? (

@@ -1,5 +1,4 @@
 import { BookSearch } from '@/components/book-search';
-import { MemoryShelf } from '@/components/memory-shelf';
 import { bookCatalog } from '@/lib/mock-data';
 import Link from 'next/link';
 
@@ -49,10 +48,6 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-
-      <div className="mt-8">
-        <MemoryShelf />
-      </div>
     </main>
   );
 }
