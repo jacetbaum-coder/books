@@ -101,8 +101,13 @@ export async function createMyLibraryEntry(payload: {
     dimensions: LibraryReaderAssociations['dimensions'];
   };
   userReflection: LibraryUserReflection;
-}): Promise<LibraryEntry | null> {
-  if (!supabaseServer) return null;
+}): Promise<{ entry: LibraryEntry | null; error?: string }> {
+  if (!supabaseServer) {
+    return {
+      entry: null,
+      error: 'Supabase is not configured. Set NEXT_PUBLIC_SUPABASE_URL and either SUPABASE_SERVICE_ROLE_KEY or NEXT_PUBLIC_SUPABASE_ANON_KEY.'
+    };
+  }
 
   const { data, error } = await supabaseServer
     .from('my_library_entries')
@@ -117,6 +122,9 @@ export async function createMyLibraryEntry(payload: {
     .select('*')
     .single();
 
-  if (error || !data) return null;
-  return toLibraryEntry(data as LibraryRow);
+  if (error || !data) {
+    return { entry: null, error: error?.message ?? 'Insert failed for my_library_entries.' };
+  }
+
+  return { entry: toLibraryEntry(data as LibraryRow) };
 }

@@ -18,7 +18,9 @@ const createEntrySchema = z.object({
   bookSlug: z.string().min(1),
   title: z.string().min(1),
   author: z.string().min(1),
-  coverUrl: z.string().url().nullable(),
+  coverUrl: z
+    .union([z.string().url(), z.literal(''), z.null(), z.undefined()])
+    .transform((value) => (typeof value === 'string' && value.trim().length === 0 ? null : (value ?? null))),
   readerAssociations: z.object({
     loved: z.array(z.string()),
     disliked: z.array(z.string()),
@@ -37,7 +39,9 @@ const createEntrySchema = z.object({
     feltMost: z.array(z.string()),
     notes: z.string(),
     wouldRecommendTo: z.string(),
-    finishedOn: z.string().nullable()
+    finishedOn: z
+      .union([z.string().regex(/^\d{4}-\d{2}-\d{2}$/), z.literal(''), z.null(), z.undefined()])
+      .transform((value) => (typeof value === 'string' && value.trim().length === 0 ? null : (value ?? null)))
   })
 });
 
@@ -54,10 +58,10 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'Invalid payload', details: parsed.error.flatten() }, { status: 400 });
   }
 
-  const created = await createMyLibraryEntry(parsed.data);
-  if (!created) {
-    return NextResponse.json({ error: 'Unable to save library entry.' }, { status: 500 });
+  const result = await createMyLibraryEntry(parsed.data);
+  if (!result.entry) {
+    return NextResponse.json({ error: result.error ?? 'Unable to save library entry.' }, { status: 500 });
   }
 
-  return NextResponse.json({ entry: created }, { status: 201 });
+  return NextResponse.json({ entry: result.entry }, { status: 201 });
 }

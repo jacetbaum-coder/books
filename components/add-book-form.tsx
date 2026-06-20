@@ -86,6 +86,18 @@ function arrayToCsv(values: string[]) {
   return values.join(', ');
 }
 
+function normalizeUrl(value: string | null): string | null {
+  if (!value) return null;
+  const trimmed = value.trim();
+  if (!trimmed) return null;
+  try {
+    const parsed = new URL(trimmed);
+    return parsed.toString();
+  } catch {
+    return null;
+  }
+}
+
 export function AddBookForm() {
   const router = useRouter();
   const [title, setTitle] = useState('');
@@ -197,7 +209,7 @@ export function AddBookForm() {
         bookSlug: slugifyBook(cleanTitle, cleanAuthor),
         title: cleanTitle,
         author: cleanAuthor,
-        coverUrl,
+        coverUrl: normalizeUrl(coverUrl),
         readerAssociations: {
           loved: csvToArray(readerAssociations.loved),
           disliked: csvToArray(readerAssociations.disliked),
@@ -227,7 +239,8 @@ export function AddBookForm() {
       });
 
       if (!response.ok) {
-        setMessage('Save failed. Check your Supabase settings and try again.');
+        const errorJson = (await response.json().catch(() => null)) as { error?: string } | null;
+        setMessage(errorJson?.error ?? 'Save failed. Please try again.');
         return;
       }
 
