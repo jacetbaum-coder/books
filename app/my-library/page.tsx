@@ -1,6 +1,8 @@
 import Link from 'next/link';
 import { listMyLibraryEntries } from '@/lib/my-library-repository';
 
+export const dynamic = 'force-dynamic';
+
 export default async function MyLibraryPage() {
   const entries = await listMyLibraryEntries(200);
 
